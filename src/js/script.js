@@ -12,12 +12,12 @@
       cart: '#cart',
     },
     all: {
-      menuProducts: '#product-list > .product',
+      menuProducts: '#product-list > .product',  // tutaj jest procukt i dalej w 38 linii nadawany jest active
       menuProductsActive: '#product-list > .product.active',
       formInputs: 'input, select',
     },
     menuProduct: {
-      clickable: '.product__header',
+      clickable: '.product__header',  // selektor zwiazany z kliknieciem w metodzie initAccordion, zmiana widocznosci opcji na klikniecie
       form: '.product__order',
       priceElem: '.product__total-price .price',
       imageWrapper: '.product__images',
@@ -35,7 +35,7 @@
 
   const classNames = {
     menuProduct: {
-      wrapperActive: 'active',
+      wrapperActive: 'active', // klasa active nadawana przez akordeon
       imageVisible: 'active',
     },
   };
@@ -52,18 +52,86 @@
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
   class Product{
-    constructor(){
+    constructor(id, data){
       const thisProduct = this;
+      thisProduct.id = id;
+      thisProduct.data = data;
+
+      thisProduct.renderInMenu();
+      thisProduct.initAccordion();
       console.log('new Product:', thisProduct);
+    }
+
+    renderInMenu(){
+      const thisProduct = this;
+    
+
+      /* generate HTML based on tempalte */
+
+      const generatedHTML = templates.menuProduct(thisProduct.data);
+      console.log(generatedHTML);
+
+      /* create element using utils.createElementFromHTML */
+
+      thisProduct.element = utils.createDOMFromHTML(generatedHTML);
+
+      /* find menu container */
+      
+      const menuContainer = document.querySelector(select.containerOf.menu);
+
+      /* add element to menu */
+
+      menuContainer.appendChild(thisProduct.element);
+
+    }
+
+    initAccordion(){
+      const thisProduct = this;
+  
+      /* find the clickable trigger (the element that should react to clicking) */
+      const clicableTrigger = document.getElementById(thisProduct.element);
+
+      /* START: click event listener to trigger */
+      clicableTrigger.addEventListener('click', function(){
+        console.log('clicked product');
+      });
+
+      /* prevent default action for event */
+      event.preventDefault();
+
+      /* toggle active class on element of thisProduct */
+      thisProduct.element.classList.toggle('active');
+
+      /* find all active products */
+      let activeProducts = document.querySelectorAll('.product a.active');
+
+      /* START LOOP: for each active product */
+      for (let activeProduct in activeProducts){
+
+        /* START: if the active product isn't the element of thisProduct */
+        if (!activeProducts[activeProduct]) {
+
+          /* remove class active for the active product */
+          activeProduct.classList.remove('active');
+        
+          /* END: if the active product isn't the element of thisProduct */
+        } else{
+          activeProduct.classList.add('active');
+        }
+      /* END LOOP: for each active product */
+      }
+      /* END: click event listener to trigger */
     }
   }
 
   const app = {
     initMenu: function(){
       const thisApp = this;
-      console.log('thisApp.data', thisApp.data);
-      const testProduct = new Product();
-      console.log('testProduct', testProduct);
+      console.log('thisApp.data:', thisApp.data);
+
+      for(let productData in thisApp.data.products){
+        new Product(productData, thisApp.data.products[productData]);
+      }
     },
     initData: function(){
       const thisApp = this;
