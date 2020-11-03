@@ -208,6 +208,7 @@
       }
 
       /* set the contents of thisProduct.priceElem to be the value of variable price */
+      thisProduct.price = price;
       thisProduct.priceElem.innerHTML = thisProduct.price;    
     }
   }
