@@ -117,13 +117,13 @@
         thisProduct.element.classList.toggle('active');
 
         /* find all active products */
-        let activeProducts = document.querySelectorAll('.product a.active');
+        let activeProducts = document.querySelectorAll('.product.active');
 
         /* START LOOP: for each active product */
-        for (let activeProduct in activeProducts){
+        for (let activeProduct of activeProducts){
 
           /* START: if the active product isn't the element of thisProduct */
-          if (!activeProducts[activeProduct]) {
+          if (activeProduct !== thisProduct.element) {
 
             /* remove class active for the active product */
             activeProduct.classList.remove('active');
@@ -137,7 +137,7 @@
         /* END: click event listener to trigger */
       });
     }
-    
+
     initOrderForm(){       //będzie uruchamiana tylko raz dla każdego produktu. Będzie odpowiedzialna za dodanie listenerów eventów do formularza, jego kontrolek, oraz guzika dodania do koszyka.
       const thisProduct = this;
       console.log(thisProduct.initOrderForm);

@@ -87,7 +87,7 @@ dataSource.products = {
     description: 'A delicious salad made of fresh, home-grown products on a crispy lettuce base.',
     images: [
       '<img class="active" src="images/salad/plate.svg">',
-      '<img class="active ingredients-cucumber" src="images/salad/cucumber.svg" style="z-index: 1;">',
+      '<img class="active ingredients-cucumber" src="images/salad/cucumber.svg" style="z-index: 1;">',     //linie 90-95 usunieta klasa active
       '<img class="active ingredients-tomatoes" src="images/salad/tomatoes.svg" style="z-index: 2;">',
       '<img class="active ingredients-olives" src="images/salad/salad-olives.svg" style="z-index: 3;">',
       '<img class="active ingredients-feta" src="images/salad/feta.svg" style="z-index: 4;">',
