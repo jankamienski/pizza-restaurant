@@ -97,6 +97,8 @@
       console.log(thisProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       console.log(thisProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      console.log(thisProduct.imageWrapper);
     }
     
     initAccordion(){
@@ -201,6 +203,20 @@
           /* END ELSE IF: if option is not selected and option is default */
           }
 
+          const activeImages = thisProduct.imageWrapper.querySelectorAll('.' + 'paramId' + '-' + 'optionId');
+          
+          /* Condition If: option is marked - all images for this option should get class from classNames.menuProduct.imageVisible */
+          if(optionSelected) {
+            for (let activeImage of activeImages){
+              activeImage.classList.add(classNames.menuProduct.imageVisible);
+            }
+            /* Condition else: all images should lose class saved in classNames.menuProduct.imageVisible */
+
+          } else  
+            for (let activeImage of activeImages) {
+              activeImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
+        
           /* END LOOP: for each optionId in param.options */
         }
 
