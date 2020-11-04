@@ -61,6 +61,7 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
       console.log('new Product:', thisProduct);
     }
@@ -71,7 +72,7 @@
 
       /* generate HTML based on tempalte */
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      console.log(generatedHTML);
+      // console.log(generatedHTML);
 
       /* create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
@@ -88,17 +89,19 @@
       const thisProduct = this;
     
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      console.log(thisProduct.accordionTrigger);
+      // console.log(thisProduct.accordionTrigger);
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      console.log(thisProduct.form);
+      // console.log(thisProduct.form);
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      console.log(thisProduct.formInputs);
+      // console.log(thisProduct.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      console.log(thisProduct.cartButton);
+      // console.log(thisProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-      console.log(thisProduct.priceElem);
+      // console.log(thisProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      console.log(thisProduct.imageWrapper);
+      // console.log(thisProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+      console.log(thisProduct.amountWidgetElem);
     }
     
     initAccordion(){
@@ -109,7 +112,7 @@
 
       /* START: click event listener to trigger */
       clickableTrigger.addEventListener('click', function(){
-        console.log('clicked product');
+        // console.log('clicked product');
      
 
         /* prevent default action for event */
@@ -142,7 +145,7 @@
 
     initOrderForm(){       //będzie uruchamiana tylko raz dla każdego produktu. Będzie odpowiedzialna za dodanie listenerów eventów do formularza, jego kontrolek, oraz guzika dodania do koszyka.
       const thisProduct = this;
-      console.log(thisProduct.initOrderForm);
+      // console.log(thisProduct.initOrderForm);
       
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -164,11 +167,11 @@
 
     processOrder(){
       const thisProduct = this;
-      console.log(this.processOrder);
+      // console.log(this.processOrder);
     
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);  //tutaj ma odczytywac wartosci z formularza (name,value) aby wiedziec jakei opcje w menu zostaly zaznaczone laczy sie to z funkcja i index i data.js
-      console.log('formData', formData);
+      // console.log('formData', formData);
 
       /* set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;     // PYTANIE ale gdzie jest ten obiekt data.price???
@@ -223,16 +226,79 @@
       /* END LOOP: for each paramId in thisProduct.data.params */
       }
 
+      /* Multiple price by amount */
+      price *=thisProduct.amountWidget.value;
+
       /* set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.price = price;
       thisProduct.priceElem.innerHTML = thisProduct.price;    
+    }
+
+    initAmountWidget(){
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);  // Do omowienia ten zapis...
+      thisProduct.amountWidgetElem.addEventListener('updated', thisProduct.processOrder());
+
+    }
+
+  }
+  
+  class AmountWidget{
+    constructor(element){
+      const thisWidget = this;
+
+      thisWidget.getElements(element);
+      thisWidget.value = settings.amountWidget.defaultValue;  // Czy nie mozna bylo tego dac do if , ze jesli podana wartosc jest null to zwroc defaultValue?
+      thisWidget.setValue(thisWidget.input.value);
+      console.log('AmountWidget:', thisWidget);
+      console.log('constructor arguments:', element);
+    }
+  
+
+    getElements(element){
+      const thisWidget = this;
+    
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+
+    setValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /* TODO: Add validation */
+
+      if(newValue != thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
+      thisWidget.input.value = thisWidget.value;
+    }
+
+    initActions(){
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', thisWidget.input.value);
+      thisWidget.linkDecrease.addEventListener('click', thisWidget.value - 1);
+      thisWidget.linkIncrease.addEventListener('click', thisWidget.value + 1);
+    }
+
+    announce(){
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
     }
   }
 
   const app = {
     initMenu: function(){
       const thisApp = this;
-      console.log('thisApp.data:', thisApp.data);
+      // console.log('thisApp.data:', thisApp.data);
 
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
