@@ -203,8 +203,8 @@
           /* END ELSE IF: if option is not selected and option is default */
           }
 
-          const activeImages = thisProduct.imageWrapper.querySelectorAll('.' + 'paramId' + '-' + 'optionId');
-          
+          const activeImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+
           /* Condition If: option is marked - all images for this option should get class from classNames.menuProduct.imageVisible */
           if(optionSelected) {
             for (let activeImage of activeImages){
@@ -212,11 +212,11 @@
             }
             /* Condition else: all images should lose class saved in classNames.menuProduct.imageVisible */
 
-          } else  
+          } else  {
             for (let activeImage of activeImages) {
               activeImage.classList.remove(classNames.menuProduct.imageVisible);
             }
-        
+          }
           /* END LOOP: for each optionId in param.options */
         }
 
