@@ -251,6 +251,7 @@
       thisWidget.getElements(element);
       thisWidget.value = settings.amountWidget.defaultValue;  // Czy nie mozna bylo tego dac do if , ze jesli podana wartosc jest null to zwroc defaultValue?
       thisWidget.setValue(thisWidget.input.value);
+      thisWidget.initActions();
       console.log('AmountWidget:', thisWidget);
       console.log('constructor arguments:', element);
     }
@@ -282,9 +283,18 @@
     initActions(){
       const thisWidget = this;
 
-      thisWidget.input.addEventListener('change', thisWidget.input.value);
-      thisWidget.linkDecrease.addEventListener('click', thisWidget.value - 1);
-      thisWidget.linkIncrease.addEventListener('click', thisWidget.value + 1);
+      thisWidget.input.addEventListener('change', function() {
+        (thisWidget.input.value);
+      });
+      //thisWidget.input.value);
+      thisWidget.linkDecrease.addEventListener('click', function(event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1);
+      });
+      thisWidget.linkIncrease.addEventListener('click', function(event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1);
+      });
     }
 
     announce(){
