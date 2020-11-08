@@ -195,6 +195,7 @@
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
@@ -203,8 +204,10 @@
       // console.log(this.processOrder);
     
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
-      const formData = utils.serializeFormToObject(thisProduct.form);  //tutaj ma odczytywac wartosci z formularza (name,value) aby wiedziec jakei opcje w menu zostaly zaznaczone laczy sie to z funkcja i index i data.js
+      const formData = utils.serializeFormToObject(thisProduct.form);  //tutaj ma odczytywac wartosci z formularza (name,value) aby wiedziec jakie opcje w menu zostaly zaznaczone laczy sie to z funkcja i index i data.js
       // console.log('formData', formData);
+
+      thisProduct.params = {};
 
       /* set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;     // PYTANIE ale gdzie jest ten obiekt data.price???
@@ -243,6 +246,15 @@
 
           /* Condition If: option is marked - all images for this option should get class from classNames.menuProduct.imageVisible */
           if(optionSelected) {
+
+            if (!thisProduct.params[paramId]) {
+              thisProduct.params[paramId] = {
+                label: param.label,
+                options: {},
+              };
+            }
+            thisProduct.params[paramId].options[optionId] = option.label;
+
             for (let activeImage of activeImages){
               activeImage.classList.add(classNames.menuProduct.imageVisible);
             }
@@ -259,12 +271,14 @@
       /* END LOOP: for each paramId in thisProduct.data.params */
       }
 
-      /* Multiple price by amount */
-      price *=thisProduct.amountWidget.value;
+      /* multiply price by amount */
+      thisProduct.priceSingle = price;
+      thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
 
       /* set the contents of thisProduct.priceElem to be the value of variable price */
-      thisProduct.price = price;
-      thisProduct.priceElem.innerHTML = thisProduct.price;    
+      thisProduct.priceElem.innerHTML = thisProduct.price;
+
+      console.log('parametry thisProduct.params', thisProduct.params);
     }
 
     initAmountWidget(){
@@ -272,6 +286,15 @@
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);  // Do omowienia ten zapis...
       thisProduct.amountWidgetElem.addEventListener('updated', thisProduct.processOrder());
+    }
+
+    addToCart() {
+      const thisProduct = this;
+
+      thisProduct.data.name = thisProduct.name;
+      thisProduct.amountWidget.value = thisProduct.amount;
+
+      app.cart.add(thisProduct);
     }
   }
   
@@ -353,6 +376,7 @@
 
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       console.log(thisCart.dom.toggleTrigger);
     }
     initActions() {
@@ -360,6 +384,21 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function(){
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
+    add(menuProduct) {
+      const thisCart = this;
+
+      /* generate HTML based on tempalte */
+
+      const generatedHTML = templates.cartProduct(menuProduct);
+
+      /* create element using utils.createElementFromHTML */
+      
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
+      thisCart.dom.productList.appendChild(generatedDOM);
+ 
+
     }
   }
 
