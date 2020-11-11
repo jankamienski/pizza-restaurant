@@ -487,7 +487,7 @@
       const thisCartProduct = this;
 
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);  // Do omowienia ten zapis...
-      thisCartProduct.amountWidgetElem.addEventListener('updated', function(){
+      thisCartProduct.amountWidget.element.addEventListener('updated', function(){
         thisCartProduct.price = thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price; 
