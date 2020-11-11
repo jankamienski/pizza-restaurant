@@ -399,7 +399,7 @@
         thisCart.update();
       });
       thisCart.dom.productList.addEventListener('remove', function(){
-        thisCart.remove();
+        thisCart.remove(event.detail.cartProduct);
       });
     }
 
@@ -467,6 +467,7 @@
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
 
       console.log('thisCartProduct'. thisCartProduct);
       console.log('productData'. menuProduct);
