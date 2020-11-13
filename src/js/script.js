@@ -426,8 +426,8 @@
         deliveryFee: thisCart.deliveryFee,
         products: [],
       };
-      for(let product in payload.products){
-        payload.products.push(product.getData());
+      for (let cartProduct of thisCart.products) {
+        payload.products.push(cartProduct.getData());
       }
       const options = {
         method: 'POST',
