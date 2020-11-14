@@ -428,6 +428,8 @@
       };
       for (let cartProduct of thisCart.products) {
         payload.products.push(cartProduct.getData());
+        console.log(payload.products);
+        console.log(thisCart.products);
       }
       const options = {
         method: 'POST',
