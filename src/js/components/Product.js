@@ -221,7 +221,7 @@ class Product{
       }
     });
 
-    thisProduct.element.dispatchEvent(event);
+    thisProduct.element.dispatchEvent(event);  // metodas ktora wywoluje ten event, wywolanie   a eventlistener to odebranie
   }
 }
 
