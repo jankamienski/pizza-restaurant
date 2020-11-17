@@ -2,6 +2,7 @@ import {settings, select} from './settings.js';
 //import {classNames, templates} from '/.settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 //import CartProduct from './components/CartProduct.js';
 //import AmountWidget from ',/components/AmountWidget.js';
 
@@ -31,9 +32,13 @@ const app = {
         /*execute initMenu method*/
         thisApp.initMenu();
       });
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
+    console.log('thisApp.data', JSON.stringify(thisApp.data)); 
+  },
+  initBooking: function() {
+    const thisApp = this;
 
-
+    const reserwationWrapper =  document.querySelector(select.containerOf.booking);
+    thisApp.booking = new Booking(reserwationWrapper);
   },
   initCart: function(){
     const thisApp = this;
@@ -56,6 +61,7 @@ const app = {
     // console.log('templates:', templates);
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
   },
 };
 
