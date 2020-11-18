@@ -34,11 +34,11 @@ class CartProduct{
   initAmountWidget(){
     const thisCartProduct = this;
 
-    thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);  // Do omowienia ten zapis...
-    thisCartProduct.amountWidget.element.addEventListener('updated', function(){
-      thisCartProduct.price = thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
+    thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
+    thisCartProduct.dom.amountWidget.addEventListener('updated', function() {
       thisCartProduct.amount = thisCartProduct.amountWidget.value;
-      thisCartProduct.dom.price.innerHTML = thisCartProduct.price; 
+      thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
+      thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
     });
   }
 
