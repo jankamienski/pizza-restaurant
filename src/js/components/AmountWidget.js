@@ -8,10 +8,9 @@ class AmountWidget extends BaseWidget{
     thisWidget.getElements(element);
   
     thisWidget.initActions();
-    console.log('AmountWidget:', thisWidget);
+
+    // console.log('AmountWidget:', thisWidget);
     // console.log('constructor arguments:', element);
-
-
   }
 
   getElements(){  
@@ -24,7 +23,7 @@ class AmountWidget extends BaseWidget{
   }
 
   isValid(value){  
-    return !isNaN(value)  
+    return !isNaN(value) //sprawdza czy przekazana wartosc nie jest liczba i mamy zaprzeczenie 
     && value >= settings.amountWidget.defaultMin 
     && value <= settings.amountWidget.defaultMax;
   }
