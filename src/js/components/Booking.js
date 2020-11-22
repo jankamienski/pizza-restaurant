@@ -146,20 +146,18 @@ class Booking {
       if(!isNaN(tableId)){
         tableId = parseInt(tableId);
       }
-
       if(
         !allAvailable
         &&
         thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1
       ){
-        table.classList.add(classNames.booking.tableBooked);
+        table.classList.add(classNames.booking.tableBooked, classNames.booking.unclicable);
       } else {
-        table.classList.remove(classNames.booking.tableBooked);
+        table.classList.remove(classNames.booking.tableBooked, classNames.booking.unclicable);
       }
     }
   }
-    
-
+  
   render(widgetWrapper){
     const thisBooking = this;
     const generateHTML = templates.bookingWidget();
@@ -177,6 +175,39 @@ class Booking {
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
 
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+
+    for (let table of thisBooking.dom.tables){
+      table.addEventListener('click', function(){
+        thisBooking.highlightTable(table);
+      });
+    }
+  }
+
+  highlightTable(table){
+    
+    const thisBooking = this;
+
+    thisBooking.selectedTable = table.getAttribute('data-table');
+    table.classList.toggle(classNames.booking.tableBooked);
+
+    for (let table of this.dom.tables){
+      table.classList.toggle(classNames.booking.tableBooked);
+    //if (table.classList.contains(classNames.booking.tableBooked)){
+    //  } else ( table.classList.add(classNames.booking.tableBooked));
+    }
+  }
+
+  DateHourTableUnmarker(tableId){
+    const thisBooking = this;
+
+    for (let table of thisBooking.dom.tables){
+      table.addEventListener('change',function(){
+        thisBooking.selectedTable = table.getAttribute('data-table');
+        if(tableId != tableId){
+          table.classList.remove(classNames.booking.tableBooked);
+        }
+      });
+    }
   }
 
   initWidgets(){
