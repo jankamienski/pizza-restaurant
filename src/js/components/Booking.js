@@ -210,10 +210,10 @@ class Booking {
       address: thisBooking.dom.address.value,
       phone: thisBooking.dom.phone.value,
       date: thisBooking.datePicker.value,
-      Hour: thisBooking.hourPicker.value,
+      hour: thisBooking.hourPicker.value,
       duration: thisBooking.hoursAmount.value,
       people: thisBooking.peopleAmount.value,
-      table: thisBooking.tables,
+      table: parseInt(thisBooking.selectedTable),
       starters: [],
     };
     
@@ -232,8 +232,11 @@ class Booking {
     fetch(url, options).then(function (response) {
       return response.json();
     }).then(function (parsedResponse) {
+      thisBooking.getData();
       console.log('parsedResponse', parsedResponse);
     });
+
+
     
   }
 
