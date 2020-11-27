@@ -1,0 +1,289 @@
+/* Global */
+@import 'settings';
+
+
+.home-wrapper {
+  margin-top: 42px auto;
+  padding: 72px 48px;
+  //border-radius: 5px;
+  background: $color-light;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.section-wrapper {
+  margin-top: 90px;
+}
+
+/* menu-elements -order and booking */
+
+.first-menu-row {
+  display: flex;
+  width: 100%;
+}
+
+.first-menu-row .menu-item {
+  display: flex;
+  flex: 2;
+  height: 125px;
+  position: relative;
+  width: 440px;
+}
+
+.menu-item .menu-item-content {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 100%;
+  color: $color-light;
+  text-decoration: none;
+  text-align: center;
+
+  a {
+    text-transform: uppercase;
+    font-size: 17px;
+    font-family: $font-header;
+  }
+
+  h2 {
+    color: $color-light;
+    transition: $transition;
+      
+  }
+
+  p {
+    opacity: 0;
+    transition: $transition;
+    color: $color-light;
+    font-size: 13px;
+    font-family: $font-text;
+  }
+}
+
+.menu-item .menu-item-content:hover p {
+  opacity: 1;
+  transform: translateY(-30px);
+}
+
+.menu-item .menu-item-content:hover .menu-title {
+  transform: translateY(-30px);
+}
+
+.first-menu-row .menu-item .menu-image img {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  z-index: 1;
+  height: 125px;
+  width: 100%;
+  object-fit: cover;
+  padding: 3px 3px;
+}
+
+.menu-item .menu-item-content a {
+  text-decoration: none;
+}
+
+.second-menu-row {
+  margin-top: -34px;
+  
+}
+
+.second-menu-row .menu-item {
+  display: flex;
+  flex: 2;
+  height: 125px;
+  position: relative;
+  width: 100%;
+}
+
+.second-menu-row .menu-item .hours {
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+  background-color: $color-main;
+  margin-top: 13px;
+  
+  p:first-child {
+    font-size: 23px;
+    text-transform: uppercase;
+    font-family: $font-header;
+    color: $color-light;
+  }
+
+  p:nth-child(2) {
+    margin-top: -20px;
+    font-size: 13px;
+    font-family: $font-text;
+    color: $color-light;
+  }
+}
+
+/* Carousel */
+* { box-sizing: border-box; }
+
+body { font-family: sans-serif; }
+
+.carousel {
+  background: #FAFAFA;
+}
+
+.carousel-cell {
+  
+  width: 90%;
+  height: 200px;
+  margin-right: 10px;
+  display: flex;
+}
+
+.carousel-cell-image {
+  display: inline-block;
+  max-height: 100%;
+  margin: 0 auto;
+  max-width: 100%;
+  opacity: 1;
+  -webkit-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+
+  img {
+    width: 80%;
+    height: 200px;
+    z-index: -1;
+    margin-left: 50px;
+  }
+}
+
+.carousel-opinion {
+  z-index: 2;
+  padding-left: 25px;
+  padding-right: 0;
+
+  h3 {
+    text-transform: uppercase;
+  }
+}
+
+.flickity-prev-next-button .flickity-button-icon {
+  position: absolute;
+  left: 20%;
+  top: 40%;
+  width: 100%;
+  height: 20%;
+}
+
+.flickity-viewport {
+  margin-left: -40px;
+}
+
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  color: $color-dark;
+  font-family: $font-text;
+
+}
+
+.carousel-author {
+  padding-top: 15px;
+  color: $color-dark;
+  font-family: $font-text;
+}
+
+/* Gallery */
+
+.gallery {
+  display: flex;
+  justify-content: center;
+
+  .first-galllery-row,
+  .second-galllery-row {
+    justify-content: center;
+    display: flex;
+  }
+
+  .gallery-box {
+    margin: 5px;
+    display: flex;
+    position: relative;
+    align-self: center;
+    justify-content: center;
+    transition: $transition;
+  }
+
+  .gallery-box::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: $color-dark;
+    opacity: 0;
+    position: absolute;
+    display: inline-block;
+    transition: $transition;
+    z-index: 2;
+  }
+
+  .gallery-box:hover::after {
+    opacity: 0.7;
+  }
+
+  .gallery-icons {
+    justify-content: center;
+    align-self: center;
+    position: absolute;
+    opacity: 0;
+    z-index: 5;
+    transition: $transition;
+    padding: 65px;
+
+    .icon {
+      color: $color-light;
+      font-size: 20px;
+      z-index: 5;
+      padding: 4px;
+    }
+  }
+
+  .gallery-icons:hover {
+    opacity: 1;
+    z-index: 5;
+  }
+
+  .icon:hover {
+    color: $color-main;
+    z-index: 5;
+  }
+
+  img {
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+}
+
+.second-galllery-row {
+  justify-content: center;
+  display: flex;
+}
+
+/*Footer*/
+
+.home-page-footer {
+  margin: 10px;
+
+  a {
+    color: $color-main;
+  }
+}
