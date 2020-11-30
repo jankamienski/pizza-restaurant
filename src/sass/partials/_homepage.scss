@@ -11,7 +11,7 @@
 }
 
 .section-wrapper {
-  margin-top: 90px;
+  margin-bottom: 80px;
 }
 
 /* menu-elements -order and booking */
@@ -19,6 +19,7 @@
 .first-menu-row {
   display: flex;
   width: 100%;
+  margin-bottom: 0;
 }
 
 .first-menu-row .menu-item {
@@ -26,7 +27,6 @@
   flex: 2;
   height: 125px;
   position: relative;
-  width: 440px;
 }
 
 .menu-item .menu-item-content {
@@ -87,11 +87,6 @@
   text-decoration: none;
 }
 
-.second-menu-row {
-  margin-top: 40px;
-  
-}
-
 .second-menu-row .menu-item {
   display: flex;
   flex: 2;
@@ -102,18 +97,14 @@
 }
 
 .second-menu-row .menu-item .hours {
-  position: absolute;
-  top: 59%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 100%;
   text-decoration: none;
   text-align: center;
   background-color: $color-main;
-  margin-top: 13px;
-  
+  margin-top: 3px;
+
   p:first-child {
-    margin: 10px 0 10px 0;
+    margin: 10px 0;
     font-size: 23px;
     text-transform: uppercase;
     font-family: $font-header;
