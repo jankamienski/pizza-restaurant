@@ -11,6 +11,8 @@ class Booking {
     thisBooking.render(widgetWrapper);
     thisBooking.initWidgets();
     thisBooking.getData();
+    //thisBooking.initActions(); // zmiana koloru slidera
+    thisBooking.sendOrder(); // zmiana koloru slidera
 
   }
 
@@ -76,13 +78,14 @@ class Booking {
 
   parseData(bookings, eventsCurrent, eventsRepeat){
     const thisBooking = this;
-
+    
     thisBooking.booked = {};
-
+    console.log(thisBooking.booked);
+    
     for(let item of bookings){
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
     }
-
+    //debugger;
     for(let item of eventsCurrent){
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
     }
@@ -155,6 +158,7 @@ class Booking {
       } else {
         table.classList.remove(classNames.booking.tableBooked, classNames.booking.unclickable);
       }
+      thisBooking.sliderColor();    // zmiana koloru slidera
     }
   }
   
@@ -261,6 +265,46 @@ class Booking {
     });
     
     //thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
+  }
+
+  sliderColor() {
+    //debugger;
+    const thisBooking = this;
+
+    const bookedHours = thisBooking.booked[thisBooking.date]; //godziny od 12 do 19.30 potem undefined
+    console.log(bookedHours);
+    console.log(thisBooking.booked);
+    console.log(thisBooking.date);
+    const colorArray = [];
+    console.log(colorArray);
+    const slider = document.querySelector('.rangeSlider');
+    console.log(slider);
+    const openHour = settings.hours.open; //12
+    console.log(openHour);
+    const closeHour = settings.hours.close; //24
+    console.log(closeHour);
+    const step = 0.5; // 30min
+    console.log( step);
+    //przykład pol na pol: linear-gradient(to right, color 50%, color 50%)
+
+    for (let bookedHour in bookedHours) {
+      //Oblicz poczatkowy procent
+      const firstValue = ((bookedHour - openHour) * 100) / (closeHour - openHour);
+      //dodaj do tego 30 min
+      const secondValue = (((bookedHour - openHour) + step) * 100) / (closeHour - openHour);
+
+      if (bookedHours[bookedHour].length === 3) {
+        /*brak miejsc, kolor czerowny, array.push()*/
+        colorArray.push('/*' + bookedHour + '*/red ' + firstValue + '%, red ' + secondValue + '%');
+      } else if (bookedHours[bookedHour].length === 2) {
+        colorArray.push('/*' + bookedHour + '*/orange ' + firstValue + '%, orange ' + secondValue + '%');
+      } else {
+        colorArray.push('/*' + bookedHour + '*/green ' + firstValue + '%, green ' + secondValue + '%');
+      }
+    }
+
+    const gradientColor = colorArray.sort(); //sort sortuje alfabetycznie elementy
+    slider.style.background = 'linear-gradient(to right, ' + gradientColor + ')'; //bo linear-gradient(to right, color 50%, color 50%)
   }
 }
 

@@ -30,8 +30,6 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "flickity": "^2.2.1",
-        "jquery": "^3.5.1",
         "json-server": "^0.16.2"
     },
     "devDependencies": {

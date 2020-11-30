@@ -3,7 +3,7 @@
 
 
 .home-wrapper {
-  margin-top: 42px auto;
+  margin-top: 42px;
   padding: 72px 48px;
   //border-radius: 5px;
   background: $color-light;
@@ -75,11 +75,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-right: -50%;
   transform: translate(-50%, -50%);
-  display: flex;
   z-index: 1;
-  height: 125px;
+  height: 100%;
   width: 100%;
   object-fit: cover;
   padding: 3px 3px;
@@ -90,16 +88,17 @@
 }
 
 .second-menu-row {
-  margin-top: -34px;
+  margin-top: 40px;
   
 }
 
 .second-menu-row .menu-item {
   display: flex;
   flex: 2;
-  height: 125px;
+  height: 100%;
   position: relative;
   width: 100%;
+  margin-top: 0;
 }
 
 .second-menu-row .menu-item .hours {
@@ -114,6 +113,7 @@
   margin-top: 13px;
   
   p:first-child {
+    margin: 10px 0 10px 0;
     font-size: 23px;
     text-transform: uppercase;
     font-family: $font-header;
@@ -121,7 +121,7 @@
   }
 
   p:nth-child(2) {
-    margin-top: -20px;
+    margin: 0 0 20px 0;
     font-size: 13px;
     font-family: $font-text;
     color: $color-light;
